@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Experience Certificate Generator - Shah Latif Model High School</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap"
+            rel="stylesheet">
+
+        <style>
+            :root {
+                --primary: #1a472a;
+                --secondary: #d4af37;
+                --accent: #2d6a4f;
+                --text-dark: #1f2937;
+            }
+
+            /* Global Stylish Custom Scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(to bottom, var(--primary), var(--accent));
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--accent);
+            }
+
+            body {
+                font-family: 'Poppins', sans-serif;
+                scroll-behavior: smooth;
+                background-color: #f8fafc;
+                overflow-x: hidden;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Glassmorphism Navigation */
+            nav {
+                background: rgba(26, 71, 42, 0.95);
+                backdrop-filter: blur(12px);
+                border-bottom: 2px solid var(--secondary);
+                transition: all 0.5s ease;
+            }
+
+            .nav-link {
+                position: relative;
+                transition: color 0.3s;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 0;
+                background-color: var(--secondary);
+                transition: width 0.3s;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            /* Mobile Menu */
+            #mobileMenu {
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(100%);
+            }
+
+            #mobileMenu.active {
+                transform: translateX(0);
+            }
+
+            /* Hero Animations */
+            .hero-gradient {
+                background: linear-gradient(135deg, #0f2d1a 0%, #1a472a 50%, #2d6a4f 100%);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .profile-blob {
+                width: 220px;
+                height: 220px;
+                background: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=800&q=80');
+                background-size: cover;
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                animation: morph 8s ease-in-out infinite;
+                border: 6px solid var(--secondary);
+                box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+            }
+
+            @media (min-width: 768px) {
+                .profile-blob {
+                    width: 300px;
+                    height: 300px;
+                }
+            }
+
+            @keyframes morph {
+
+                0%,
+                100% {
+                    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                    transform: scale(1);
+                }
+
+                50% {
+                    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                    transform: scale(1.05);
+                }
+            }
+
+            .typewriter {
+                display: inline-block;
+                overflow: hidden;
+                white-space: nowrap;
+                margin: 0 auto;
+                border-right: .15em solid var(--secondary);
+                animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+                text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2), 0 0 15px rgba(212, 175, 55, 0.6);
+                letter-spacing: 1px;
+            }
+
+            @keyframes typing {
+                from {
+                    width: 0
+                }
+
+                to {
+                    width: 100%
+                }
+            }
+
+            @keyframes blink-caret {
+
+                from,
+                to {
+                    border-color: transparent
+                }
+
+                50% {
+                    border-color: var(--secondary);
+                }
+            }
+
+            /* Modal & Form Styling */
+            .modal-overlay {
+                display: none;
+                background: rgba(0, 0, 0, 0.85);
+                backdrop-filter: blur(10px);
+                z-index: 1000;
+                padding: 1rem;
+            }
+
+            /* THE STYLISH FORM CONTAINER WITH PROPER SCROLLBAR FORMATTING */
+            .modal-content {
+                animation: slideUp 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+                max-height: 85vh;
+                overflow-y: auto !important;
+                width: 100%;
+                /* Firefox Scrollbar Settings */
+                scrollbar-width: thin;
+                scrollbar-color: var(--primary) #f1f5f9;
+            }
+
+            /* Form Specific Stylish Scrollbar (Webkit: Chrome, Safari, Edge) */
+            .modal-content::-webkit-scrollbar {
+                width: 6px;
+                display: block !important;
+            }
+
+            .modal-content::-webkit-scrollbar-track {
+                background: #f1f5f9;
+                border-radius: 0 24px 24px 0;
+                /* Matches rounded-3xl of the container */
+                box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .modal-content::-webkit-scrollbar-thumb {
+                background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+                border-radius: 12px;
+                border: 1px solid #f1f5f9;
+            }
+
+            .modal-content::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary);
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100px) scale(0.9);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+            }
+
+            /* Print Layout */
+            @media print {
+                @page {
+                    size: A4 landscape;
+                    margin: 0;
+                }
+
+                html,
+                body {
+                    width: 297mm;
+                    height: 210mm;
+                    margin: 0 !important;
+                    overflow: hidden !important;
+                    -webkit-print-color-adjust: exact;
+                }
+
+                body * {
+                    visibility: hidden;
+                }
+
+                #certificate-area,
+                #certificate-area * {
+                    visibility: visible;
+                }
+
+                #certificate-area .watermark {
+                    display: none !important;
+                }
+
+                #certificate-area {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 297mm;
+                    height: 210mm;
+                    display: flex !important;
+                    align-items: center;
+                    justify-content: center;
+                    background: white !important;
+                }
+
+                .cert-container {
+                    width: 285mm;
+                    height: 195mm;
+                    position: relative;
+                }
+
+                .cert-title-text {
+                    font-size: 2.75rem !important;
+                }
+
+                .cert-header-text {
+                    font-size: 2.25rem !important;
+                }
+
+                .cert-body-text {
+                    font-size: 1.1rem !important;
+                    line-height: 1.5 !important;
+                }
+            }
+
+            .cert-border {
+                border: 12px double var(--primary);
+                padding: 15px;
+                height: 100%;
+                background: #fff;
+                box-shadow: inset 0 0 0 2px var(--secondary);
+                box-sizing: border-box;
+            }
+
+            .cert-inner-border {
+                border: 2px solid var(--secondary);
+                padding: 25px 35px;
+                height: 100%;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+            }
+
+            .btn-fancy {
+                background: linear-gradient(45deg, var(--primary), var(--accent));
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                box-shadow: 0 4px 15px rgba(26, 71, 42, 0.3);
+            }
+
+            .btn-fancy:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 12px 30px rgba(26, 71, 42, 0.5);
+            }
+
+            /* Form Controls */
+            input[type="date"],
+            select,
+            input[type="text"] {
+                transition: all 0.3s ease;
+            }
+
+            input[type="date"]:hover,
+            select:hover {
+                border-color: var(--secondary);
+                background-color: #fff;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+            }
+
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                background-color: var(--primary);
+                padding: 6px;
+                cursor: pointer;
+                border-radius: 6px;
+                filter: invert(1);
+            }
+
+            input:focus,
+            select:focus {
+                box-shadow: 0 0 0 4px rgba(26, 71, 42, 0.1);
+                border-color: var(--primary) !important;
+            }
+
+            .toast-msg {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #ef4444;
+                color: white;
+                padding: 1.25rem 2.5rem;
+                border-radius: 1.25rem;
+                z-index: 4000;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                animation: bounceInCentered 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                text-align: center;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            }
+
+            @keyframes bounceInCentered {
+                0% {
+                    transform: translate(-50%, -100%) scale(0.8);
+                    opacity: 0;
+                }
+
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+            }
+
+            /* About Section Styles */
+            .about-card {
+                background: white;
+                transition: all 0.4s ease;
+                border: 1px solid #f1f5f9;
+            }
+
+            .about-card:hover {
+                transform: translateY(-10px);
+                border-color: var(--secondary);
+                box-shadow: 0 20px 40px rgba(26, 71, 42, 0.05);
+            }
+        </style>
+    </head>
+
+    <body class="bg-slate-50">
+
+        <!-- Navigation Bar -->
+        <nav id="mainNav" class="fixed w-full z-50 text-white py-4 px-4 md:px-12 flex justify-between items-center">
+            <div class="flex items-center gap-2 md:gap-3 group cursor-pointer"
+                onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div
+                    class="bg-white p-0.5 md:p-1 rounded-xl shadow-lg transform group-hover:rotate-12 transition-transform overflow-hidden flex items-center justify-center w-10 h-10 md:w-12 md:h-12">
+                    <img src="logo-1.png" alt="School Logo" class="w-full h-full object-contain"
+                        onerror="this.src='https://cdn-icons-png.flaticon.com/512/2940/2940651.png';">
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="font-bold text-sm md:text-xl tracking-tighter uppercase">Shah Latif Model School</span>
+                    <span
+                        class="text-[8px] md:text-[10px] text-yellow-400 font-semibold tracking-widest uppercase">Daharki
+                        Portal</span>
+                </div>
+            </div>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-8 font-medium items-center">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <button onclick="openForm()"
+                    class="bg-yellow-500 hover:bg-yellow-400 text-green-950 px-5 py-2 rounded-lg font-bold transition-all transform hover:scale-105 text-sm uppercase tracking-wide">
+                    Create Now
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button (3-bar) -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenu"
+            class="fixed inset-0 z-[60] bg-green-950 flex flex-col items-center justify-center gap-8 md:hidden">
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl text-white">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#" onclick="toggleMobileMenu()"
+                class="text-2xl text-white font-bold hover:text-yellow-400 transition-colors">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()"
+                class="text-2xl text-white font-bold hover:text-yellow-400 transition-colors">About</a>
+            <button onclick="toggleMobileMenu(); openForm();"
+                class="bg-yellow-500 text-green-950 px-10 py-4 rounded-2xl font-black text-xl uppercase shadow-2xl">
+                Create Now
+            </button>
+        </div>
+
+        <!-- Hero Section -->
+        <section
+            class="hero-gradient min-h-screen pt-24 pb-12 flex flex-col items-center justify-center text-center px-6">
+            <div class="relative mb-8 md:mb-12">
+                <div class="profile-blob mx-auto"></div>
+                <div
+                    class="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 bg-yellow-500 text-green-900 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-xl md:text-2xl shadow-2xl animate-bounce border-4 border-white z-20">
+                    <i class="fas fa-award"></i>
+                </div>
+            </div>
+
+            <h1 class="text-white text-3xl md:text-7xl font-bold mb-6 md:mb-8 leading-tight">
+                <div class="typewriter mx-auto mb-2 md:mb-4">Official Experience</div><br>
+                <span class="text-yellow-400 drop-shadow-lg">Certificate Generator</span>
+            </h1>
+
+            <p class="text-white/90 max-w-3xl mb-8 md:mb-12 text-sm md:text-xl leading-relaxed font-light">
+                Welcome to the specialized administrative portal for <span
+                    class="font-semibold text-yellow-400 text-base md:text-xl">Shah Latif Model High School,
+                    Daharki</span>.
+                Generate secure, professional certificates in seconds.
+            </p>
+
+            <button onclick="openForm()"
+                class="btn-fancy text-white px-8 py-3.5 md:px-12 md:py-5 rounded-2xl text-lg md:text-2xl font-bold flex items-center gap-3 md:gap-4 group">
+                <i class="fas fa-magic transition-transform group-hover:rotate-12"></i>
+                Click to Create
+            </button>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 md:py-32 bg-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <!-- Text Content -->
+                    <div class="lg:w-1/2 space-y-8">
+                        <div
+                            class="inline-block px-4 py-2 bg-green-50 rounded-lg text-green-800 font-bold text-sm tracking-widest uppercase border-l-4 border-green-800">
+                            Our Legacy
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                            Nurturing Minds Since Decades at <span class="text-green-800">Shah Latif Model School</span>
+                        </h2>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                            Shah Latif Model High School, Daharki, stands as a beacon of academic excellence in the
+                            district. We are committed to fostering an environment where curiosity meets knowledge, and
+                            character is built through discipline and modern pedagogical approaches.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 pt-4">
+                            <div
+                                class="p-6 bg-slate-50 rounded-2xl border-b-4 border-yellow-500 hover:bg-yellow-50 transition-colors">
+                                <h4 class="text-3xl font-bold text-green-900 mb-1">98%</h4>
+                                <p class="text-sm text-gray-500 font-medium">Success Rate</p>
+                            </div>
+                            <div
+                                class="p-6 bg-slate-50 rounded-2xl border-b-4 border-green-800 hover:bg-green-50 transition-colors">
+                                <h4 class="text-3xl font-bold text-green-900 mb-1">20+</h4>
+                                <p class="text-sm text-gray-500 font-medium">Expert Faculty</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature Cards -->
+                    <div class="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="about-card p-8 rounded-3xl">
+                            <div
+                                class="w-14 h-14 bg-green-100 text-green-800 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Our Vision</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">To be the most innovative learning center
+                                where students are prepared for global challenges.</p>
+                        </div>
+                        <div class="about-card p-8 rounded-3xl lg:translate-y-8">
+                            <div
+                                class="w-14 h-14 bg-yellow-100 text-yellow-700 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Quality First</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Maintaining the highest standards of
+                                education and professional faculty conduct.</p>
+                        </div>
+                        <div class="about-card p-8 rounded-3xl">
+                            <div
+                                class="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Modern Infrastructure</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Providing a safe and technically advanced
+                                campus for our community.</p>
+                        </div>
+                        <div class="about-card p-8 rounded-3xl lg:translate-y-8">
+                            <div
+                                class="w-14 h-14 bg-red-100 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Community First</h4>
+                            <p class="text-gray-500 text-sm leading-relaxed">Building strong bonds between teachers,
+                                students, and parents in Daharki.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative Background Element -->
+            <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-green-50 rounded-full opacity-50 blur-3xl -z-10">
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <div id="formModal" class="modal-overlay fixed inset-0 flex items-center justify-center" style="display: none;">
+            <div class="modal-content bg-white max-w-2xl rounded-3xl shadow-2xl border border-gray-100">
+                <div
+                    class="bg-gradient-to-r from-green-900 to-green-800 p-5 md:p-6 flex justify-between items-center text-white border-b-4 border-yellow-500">
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-bold">Staff Details</h3>
+                        <p class="text-green-300 text-[10px] md:text-xs">Accurate data required for generation</p>
+                    </div>
+                    <button onclick="closeForm()"
+                        class="w-8 h-8 md:w-10 md:h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all hover:rotate-90">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+
+                <form id="certForm" class="p-6 md:p-8 space-y-6 bg-slate-50">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Employee
+                                Prefix</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-user-circle absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <select id="namePrefix"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm appearance-none cursor-pointer">
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Ms.">Ms.</option>
+                                    <option value="Mrs.">Mrs.</option>
+                                    <option value="Miss">Miss</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Employee
+                                Full Name</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="text" id="fullName" placeholder="Full Name" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Father's
+                                Prefix</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-user-friends absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <select id="fatherPrefix"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm appearance-none cursor-pointer">
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Late Mr.">Late Mr.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Father's
+                                Name</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-users absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="text" id="fatherName" placeholder="Father's Name" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5 md:col-span-2">
+                            <label
+                                class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Designation</label>
+                            <div class="relative">
+                                <i
+                                    class="fas fa-briefcase absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="text" id="designation" placeholder="e.g. Senior Lecturer" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Joining
+                                Date</label>
+                            <div class="relative group">
+                                <i
+                                    class="fas fa-calendar-plus absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="date" id="joinDate" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label
+                                class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider">Resignation
+                                Date</label>
+                            <div class="relative group">
+                                <i
+                                    class="fas fa-calendar-check absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                                <input type="date" id="resignDate" required
+                                    class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-gray-100 rounded-xl focus:border-green-600 outline-none shadow-sm text-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <button type="button" onclick="showConfirmation()"
+                            class="w-full btn-fancy text-white py-4 rounded-xl text-base md:text-lg font-bold flex justify-center items-center gap-3">
+                            Proceed to Create <i class="fas fa-check-circle"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmModal" class="modal-overlay fixed inset-0 flex items-center justify-center"
+            style="display: none;">
+            <div
+                class="modal-content bg-white max-w-[280px] md:max-w-[340px] rounded-3xl shadow-2xl p-6 md:p-8 text-center border-t-8 border-green-600">
+                <div
+                    class="w-14 h-14 md:w-16 md:h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner animate-pulse">
+                    <i class="fas fa-print"></i>
+                </div>
+                <h3 class="text-lg md:text-xl font-bold mb-1 text-gray-800">Final Step</h3>
+                <p class="text-gray-500 mb-6 text-[11px] md:text-xs">Your certificate is ready. Ready to print?</p>
+                <div class="flex flex-col gap-2">
+                    <button onclick="triggerPrint()"
+                        class="w-full btn-fancy text-white py-2.5 md:py-3 rounded-xl font-bold text-xs md:text-sm flex items-center justify-center gap-2"><i
+                            class="fas fa-check"></i> Confirm and Print</button>
+                    <button onclick="closeConfirm()"
+                        class="w-full px-6 py-2 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all uppercase text-[9px]">Cancel
+                        & Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Area (Hidden for Screen) -->
+        <div id="certificate-area" class="hidden">
+            <div class="cert-container">
+                <div class="cert-border">
+                    <div class="cert-inner-border">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="text-left space-y-1">
+                                <p class="text-[10px] font-bold text-green-900">Issue Date: <span
+                                        class="text-gray-700 underline decoration-dotted underline-offset-4">..................................</span>
+                                </p>
+                                <p class="text-[10px] font-bold text-green-900 mt-4">Place: <span
+                                        class="text-gray-700">Daharki</span></p>
+                            </div>
+                            <div class="text-center flex-1 px-4">
+                                <h2 class="text-3xl cert-header-text font-bold text-green-900 mb-1"
+                                    style="font-family: 'Playfair Display', serif;">Shah Latif Model High School</h2>
+                                <p class="text-sm text-gray-600 font-bold tracking-[0.25em] uppercase">Daharki, District
+                                    Ghotki, Sindh</p>
+                                <div class="w-24 h-0.5 bg-yellow-500 mx-auto mt-3 rounded-full"></div>
+                            </div>
+                            <div class="w-24 flex flex-col items-center">
+                                <div class="w-20 h-20 flex items-center justify-center">
+                                    <img src="logo-1.png" alt="School Logo" class="max-w-full max-h-full object-contain"
+                                        onerror="this.src='https://cdn-icons-png.flaticon.com/512/2940/2940651.png';">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-4">
+                            <h1 class="text-4xl cert-title-text font-bold text-yellow-600 border-b-4 border-double border-yellow-600 inline-block px-10 pb-1 mb-6"
+                                style="font-family: 'Playfair Display', serif;">EXPERIENCE CERTIFICATE</h1>
+                        </div>
+                        <div class="text-center px-12 leading-relaxed flex-1 flex flex-col justify-center">
+                            <p
+                                class="text-lg text-gray-800 mb-6 italic underline underline-offset-4 decoration-1 decoration-gray-300">
+                                To Whom It May Concern</p>
+                            <p class="text-lg cert-body-text text-gray-700 mb-5 leading-relaxed">This is to certify that
+                                <span id="certName" class="font-bold text-green-900 text-xl px-1"></span> son of <span
+                                    id="certFather" class="font-bold text-green-900 text-xl px-1"></span>, has served as
+                                <span id="certDesignation" class="font-bold text-green-900 text-xl px-1"></span> at Shah
+                                Latif Model High School, Daharki.
+                            </p>
+                            <p class="text-lg cert-body-text text-gray-700 mb-6 leading-relaxed">The employee served the
+                                organization from <span id="certJoinDate" class="font-bold text-green-900"></span> to
+                                <span id="certResignDate" class="font-bold text-green-900"></span>. During this tenure,
+                                we found the individual to be professional, dedicated, and hardworking. They possess
+                                excellent communication and professional skills and have been a valuable asset to our
+                                academic community.
+                            </p>
+                            <p class="text-lg cert-body-text text-gray-700">We wish them the very best of luck in all
+                                future professional endeavors.</p>
+                        </div>
+                        <div class="mt-4 flex justify-between px-16 items-end pb-2">
+                            <div class="relative flex-1">
+                                <div
+                                    class="w-28 h-28 border-2 border-dashed border-gray-200 rounded-full flex items-center justify-center opacity-30 text-[7px] uppercase font-bold text-center leading-tight p-2">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-56 border-t-2 border-gray-400 mb-1"></div>
+                                <p class="text-base font-bold text-green-900 uppercase tracking-tighter">Principal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Area -->
+        <footer class="bg-slate-900 text-white py-12 md:py-16 px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+                <div class="col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fas fa-school text-yellow-500 text-3xl"></i>
+                        <h4 class="text-2xl font-bold tracking-tight">Shah Latif Model High School</h4>
+                    </div>
+                    <p class="text-gray-400 text-sm md:text-lg leading-relaxed mb-6">Dedicated to providing high-quality
+                        education and building strong foundations for the future leaders of Daharki and beyond.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:text-green-900 transition-all"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:text-green-900 transition-all"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-yellow-500 hover:text-green-900 transition-all"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-base md:text-lg font-bold mb-4 md:mb-6 text-yellow-500 uppercase tracking-widest">
+                        Navigation</h4>
+                    <ul class="text-gray-400 space-y-3 md:space-y-4 font-medium text-sm md:text-base">
+                        <li><a href="#" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">School History</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Admission Portal</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-base md:text-lg font-bold mb-4 md:mb-6 text-yellow-500 uppercase tracking-widest">
+                        Contact Info</h4>
+                    <p class="text-gray-400 mb-3 md:mb-4 font-medium text-sm md:text-base leading-relaxed"><i
+                            class="fas fa-map-marker-alt text-yellow-500 mr-3"></i> Krishan Nagar Colony, Near Imam
+                        Bargah, Daharki</p>
+                    <p class="text-gray-400 font-medium text-sm md:text-base"><i
+                            class="fas fa-phone text-yellow-500 mr-3"></i> 92 307 8253646</p>
+                </div>
+            </div>
+            <div
+                class="max-w-7xl mx-auto border-t border-white/10 mt-10 md:mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-[10px] md:text-sm">
+                <p>&copy; 2026 Shah Latif Model High School. All rights reserved.</p>
+                <p class="mt-4 md:mt-0">Developed with ❤️ by <span class="text-yellow-500 font-bold">Abdul Razak</span>
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('formModal').style.display = 'none';
+                document.getElementById('confirmModal').style.display = 'none';
+            });
+
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobileMenu');
+                menu.classList.toggle('active');
+                document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+            }
+
+            function openForm() {
+                document.getElementById('formModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeForm() {
+                document.getElementById('formModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            function showConfirmation() {
+                const values = ['fullName', 'fatherName', 'designation', 'joinDate', 'resignDate'].map(id => document.getElementById(id).value);
+
+                if (values.some(v => !v)) {
+                    if (document.querySelector('.toast-msg')) return;
+                    const msg = document.createElement('div');
+                    msg.className = "toast-msg";
+                    msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please complete all fields!';
+                    document.body.appendChild(msg);
+                    setTimeout(() => {
+                        msg.style.opacity = '0';
+                        msg.style.transition = 'all 0.5s ease';
+                        setTimeout(() => msg.remove(), 500);
+                    }, 2000);
+                    return;
+                }
+                document.getElementById('confirmModal').style.display = 'flex';
+            }
+
+            function closeConfirm() {
+                document.getElementById('confirmModal').style.display = 'none';
+            }
+
+            function formatDate(dateStr) {
+                if (!dateStr) return "";
+                try { return new Date(dateStr).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }); }
+                catch (e) { return dateStr; }
+            }
+
+            function triggerPrint() {
+                document.getElementById('certName').innerText = document.getElementById('namePrefix').value + " " + document.getElementById('fullName').value;
+                document.getElementById('certFather').innerText = document.getElementById('fatherPrefix').value + " " + document.getElementById('fatherName').value;
+                document.getElementById('certDesignation').innerText = document.getElementById('designation').value;
+                document.getElementById('certJoinDate').innerText = formatDate(document.getElementById('joinDate').value);
+                document.getElementById('certResignDate').innerText = formatDate(document.getElementById('resignDate').value);
+
+                closeConfirm();
+                closeForm();
+                setTimeout(() => { window.print(); }, 500);
+            }
+
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('mainNav');
+                if (window.scrollY > 80) {
+                    nav.classList.add('py-2', 'bg-green-950/95', 'shadow-2xl');
+                    nav.classList.remove('py-4');
+                } else {
+                    nav.classList.add('py-4');
+                    nav.classList.remove('py-2', 'bg-green-950/95', 'shadow-2xl');
+                }
+            });
+        </script>
+    </body>
+
+</html>
